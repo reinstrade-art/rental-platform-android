@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Reins Realty</string>
+    <string name="title_activity_main">Reins Realty</string>
+    <string name="package_name">com.reinstrade.rentalplatform</string>
+    <string name="custom_url_scheme">com.reinstrade.rentalplatform</string>
+</resources>

@@ -1,0 +1,49 @@
+name: Build signed APK
+
+# Runs on GitHub's own datacenter bandwidth -- built here rather than
+# locally because this project's local network can't sustain the ~200MB
+# Gradle distribution + Android Gradle Plugin dependency downloads in any
+# reasonable time (repeatedly stalled at ~20-30KB/s). The keystore is
+# decoded from a base64 secret at build time and never committed.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Sync Capacitor Android project
+        run: npx cap sync android
+
+      - name: Decode keystore
+        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/app/release-key.jks
+
+      - name: Build release APK
+        working-directory: android
+        env:
+          ANDROID_KEYSTORE_PATH: release-key.jks
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: ./gradlew assembleRelease
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reins-realty-release-apk
+          path: android/app/build/outputs/apk/release/app-release.apk

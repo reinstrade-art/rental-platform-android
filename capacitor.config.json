@@ -1,0 +1,12 @@
+{
+  "appId": "com.reinstrade.rentalplatform",
+  "appName": "Reins Realty",
+  "webDir": "www",
+  "server": {
+    "url": "https://realty.reinstrade.com",
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}
