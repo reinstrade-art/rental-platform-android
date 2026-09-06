@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1073776423012",
+    "project_id": "reins-realty",
+    "storage_bucket": "reins-realty.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073776423012:android:c20861e28a4498b212ef71",
+        "android_client_info": {
+          "package_name": "com.reinstrade.rentalplatform"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_-FXj4kObdKxiFEwI4XLRfYcYXMLeoYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
