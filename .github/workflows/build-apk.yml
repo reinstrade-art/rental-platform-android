@@ -1,4 +1,4 @@
-name: Build signed APK
+name: Build signed APK and AAB
 
 # Runs on GitHub's own datacenter bandwidth -- built here rather than
 # locally because this project's local network can't sustain the ~200MB
@@ -50,3 +50,19 @@ jobs:
         with:
           name: reins-realty-release-apk
           path: android/app/build/outputs/apk/release/app-release.apk
+
+      # Play only accepts an app bundle, never the APK above -- same signing
+      # config, same keystore already decoded on disk from the step above.
+      - name: Build release bundle (AAB)
+        working-directory: android
+        env:
+          ANDROID_KEYSTORE_PATH: release-key.jks
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: ./gradlew bundleRelease
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reins-realty-release-aab
+          path: android/app/build/outputs/bundle/release/app-release.aab
