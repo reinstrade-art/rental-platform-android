@@ -3,7 +3,7 @@
   "appName": "Reins Realty",
   "webDir": "www",
   "server": {
-    "url": "https://realty.reinstrade.com",
+    "url": "https://realty.reinstrade.com/home",
     "cleartext": false
   },
   "android": {
